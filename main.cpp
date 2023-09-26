@@ -12,8 +12,6 @@ int main()
 
     size_t n_triangles = (size_t)a[0];
 
-    //text.~Text();
-
     if (n_numbers % 9 != 0)
     {
         std:: cout << "EROOR: number of point coordinates is not equal to 9\n";
@@ -32,13 +30,67 @@ int main()
 
     Make_arr_triangles(triangles, points, n_triangles);
 
-    std::cout << (bool)(Triangles_X(triangles[0], triangles[1]) + Triangles_X(triangles[1], triangles[0])) << " \n";
+    //std::cout << "go to pizda\n";
+    /*
+    for (size_t i = 0; i < n_triangles; i++)
+    {
+        bool flag = 0;
+        for (size_t j = 0; j < n_triangles && !flag; j++)
+        {
+            if (i != j && !(triangles[j].intersec && triangles[i].intersec) 
+            && ((triangles[i].center - triangles[j].center).modul() < (triangles[i].R_circle + triangles[j].R_circle)))
+            {
+                if (Triangles_X(triangles[i], triangles[j]))
+                {
+                    triangles[i].intersec = 1;
+                    triangles[j].intersec = 1;
+                    flag = 1;
+                }
+                else if (Triangles_X(triangles[j], triangles[i]))
+                {
+                    triangles[i].intersec = 1;
+                    triangles[j].intersec = 1;
+                    flag = 1;
+                }
+            
+            }
+        }
+    }*/
 
-    //delete[] a;
+    for (size_t i = 0; i < n_triangles; i++)
+    {
+        for (size_t j = i; j < n_triangles; j++)
+        {
+            if (i != j && !(triangles[j].intersec && triangles[i].intersec) 
+            && ((triangles[i].center - triangles[j].center).modul() < (triangles[i].R_circle + triangles[j].R_circle)))
+            {
+                if (Triangles_X(triangles[i], triangles[j]))
+                {
+                    triangles[i].intersec = 1;
+                    triangles[j].intersec = 1;
+                }
+                else if (Triangles_X(triangles[j], triangles[i]))
+                {
+                    triangles[i].intersec = 1;
+                    triangles[j].intersec = 1;
+                }
+            
+            }
+        }
+    }
 
-    //delete[] triangles;
-
-    //Print_vector(Line_X_plane({{0,0,0},{2,-1,-1}}, {{3,3,3}, {1,1,1}}));
-
+    for (size_t i = 0; i < n_triangles; i++)
+    {
+        if (triangles[i].intersec)
+        {
+            std::cout << i << " ";
+        }
+    }
+    
+    std::cout << "\n";
+    /*
+    std::cout << triangles[0].intersec<< " tr_1\n";
+    std::cout << triangles[1].intersec<< " tr_2\n";
+    */
     return 0;
 } 

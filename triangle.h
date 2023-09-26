@@ -83,6 +83,7 @@ class Triangle
     Vector center     =  {}; 
     double R_circle   = NAN;
     double square     = NAN;
+    bool intersec     =   0;
 
     void Ctor_triangle(Vector const * vector_ptr);
 };
