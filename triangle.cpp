@@ -118,7 +118,7 @@ bool co_dir(const Vector& a, const Vector& b)
     return (a.direction() == b.direction());
 };
 
-bool Triangles_X(const Triangle& t1, const Triangle& t2)
+bool Triang_X_oneway(const Triangle& t1, const Triangle& t2)
 {
     Line l1 = {t1.a1, t1.b1}; // a3 :: a1
     Line l2 = {t1.a2, t1.b2}; // a1 :: a2
@@ -155,6 +155,17 @@ bool Triangles_X(const Triangle& t1, const Triangle& t2)
 
     return 0;
 };
+
+bool Triangles_X(const Triangle& t1, const Triangle& t2)
+{
+    if ((t1.center - t2.center).modul() > (t1.R_circle + t2.R_circle))
+        return 0;
+
+    if (Triang_X_oneway(t1, t2))
+        return 1;
+    
+    return Triang_X_oneway(t2, t1);
+}
 
 void Triangle::Ctor_triangle(Vector const * vector_ptr)
 {
@@ -219,4 +230,27 @@ size_t Make_arr_triangles(Triangle * const & triag_arr, Vector * const & vec_arr
 void Print_vector(Vector v)
 {
     printf("(%f, %f, %f)\n", v.x, v.y, v.z);
+};
+
+void Search_triang(std::list<Triangle*>& list, Triangle& triang)
+{
+    std::vector<Triangle*> match = {};
+
+    auto iter = list.begin();
+    while(iter != list.end())
+    {
+        if (Triangles_X(triang, **iter))
+        {
+            (**iter).intersec = 1;
+            triang.intersec = 1;
+            match.push_back(*iter);
+            list.erase(iter++);
+        }
+        else {++iter;}
+    }
+
+    for (size_t i = 0; i < match.size(); ++i)
+    {
+        Search_triang(list, *match[i]);
+    }
 };

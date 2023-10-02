@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cmath>
 #include <vector>
+#include <list>
 
 const double EPSILON = 1e-8;
 
@@ -94,8 +95,11 @@ size_t Make_arr_triangles(Triangle * const & triag_arr, Vector * const & vec_arr
 
 void Print_vector(Vector v);
 
+bool Triang_X_oneway(const Triangle& t1, const Triangle& t2);
+
 bool Triangles_X(const Triangle& t1, const Triangle& t2);
 
 bool Point_in_triang(const Vector& v, const Triangle& t); 
 
+void Search_triang(std::list<Triangle*>& list, Triangle& triang);
 

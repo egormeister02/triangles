@@ -1,5 +1,4 @@
 #include "triangle.h"
-#include <vector>
 #include <limits>
 
 int main()
@@ -30,8 +29,29 @@ int main()
 
     Make_arr_triangles(triangles, points, n_triangles);
 
+    /**/
+
+    std::list<Triangle*> list_triang = {};
+
+    for (size_t i = 0; i < n_triangles; i++)
+    {
+        list_triang.push_back(triangles + i);
+    };
+
+    while (list_triang.size() > 1)
+    {
+        auto iter = list_triang.begin();
+
+        Triangle* t1 = *iter;
+
+        list_triang.erase(iter);
+
+        Search_triang(list_triang, *t1);
+    }
+
+
     //std::cout << "go to pizda\n";
-    /*
+   /* 
     for (size_t i = 0; i < n_triangles; i++)
     {
         bool flag = 0;
@@ -57,6 +77,7 @@ int main()
         }
     }*/
 
+   /*
     for (size_t i = 0; i < n_triangles; i++)
     {
         for (size_t j = i; j < n_triangles; j++)
@@ -78,6 +99,8 @@ int main()
             }
         }
     }
+
+     */
 
     for (size_t i = 0; i < n_triangles; i++)
     {
